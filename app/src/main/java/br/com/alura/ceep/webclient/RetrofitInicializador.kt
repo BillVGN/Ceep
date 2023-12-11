@@ -17,7 +17,8 @@ class RetrofitInicializador {
 
 
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.0.27:8080/")
+//        .baseUrl("http://192.168.0.27:8080/") /* prompt */
+        .baseUrl("http://172.20.19.159:8080/") /* wsl (atualiza toda vez */
         .addConverterFactory(MoshiConverterFactory.create())
         .client(client)
         .build()

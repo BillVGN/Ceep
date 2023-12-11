@@ -38,9 +38,20 @@ class ListaNotasActivity : AppCompatActivity() {
         setContentView(binding.root)
         configuraFab()
         configuraRecyclerView()
+        configuraSwipeRefresh()
+        atualizaListaDeNotas()
+    }
+
+    private fun configuraSwipeRefresh() {
+        binding.activityListaNotasSwipe.setOnRefreshListener {
+            atualizaListaDeNotas()
+        }
+    }
+
+    private fun atualizaListaDeNotas() {
         lifecycleScope.launch {
             launch {
-                atualizaTodas()
+                sincroniza()
             }
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 buscaNotas()
@@ -48,8 +59,9 @@ class ListaNotasActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun atualizaTodas() {
-        repository.atualizaTodas()
+    private suspend fun sincroniza() {
+        repository.sincroniza()
+        binding.activityListaNotasSwipe.isRefreshing = false
     }
 
     private fun configuraFab() {
